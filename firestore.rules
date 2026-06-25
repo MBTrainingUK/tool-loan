@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null && request.auth.uid == 'Y55jhqz1qbQkpMtmvBUPhTLcNWZ2';
+    }
+
+    // Public retailers can submit a loan request, but cannot read existing
+    // requests (which contain other retailers' contact details).
+    match /requests/{requestId} {
+      allow create: if request.resource.data.keys().hasAll([
+          'retailerName', 'companyName', 'email', 'phone', 'toolDescription',
+          'neededFrom', 'neededUntil', 'status', 'createdAt'
+        ])
+        && request.resource.data.status == 'pending'
+        && request.resource.data.retailerName is string
+        && request.resource.data.companyName is string
+        && request.resource.data.email is string
+        && request.resource.data.phone is string
+        && request.resource.data.toolDescription is string
+        && request.resource.data.neededFrom is string
+        && request.resource.data.neededUntil is string
+        && request.resource.data.createdAt is string;
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /tools/{toolId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /loans/{loanId} {
+      allow read, write: if isAdmin();
+    }
+  }
+}
