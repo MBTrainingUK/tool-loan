@@ -6,7 +6,21 @@ import { sendRequestNotification } from '@/lib/email';
 
 type FormState = { error?: string; success?: boolean } | undefined;
 
+const COOLDOWN_MS = 60_000;
+const LAST_SUBMITTED_KEY = 'toolLoan:lastSubmittedAt';
+
 async function submitAction(_state: FormState, formData: FormData): Promise<FormState> {
+  // Honeypot: real users never see or fill this field. Bots that blindly fill
+  // every input will trip it — pretend success without writing anything.
+  if (String(formData.get('website') ?? '').trim()) {
+    return { success: true };
+  }
+
+  const lastSubmittedAt = Number(window.localStorage.getItem(LAST_SUBMITTED_KEY) ?? 0);
+  if (Date.now() - lastSubmittedAt < COOLDOWN_MS) {
+    return { error: 'Please wait a moment before submitting another request.' };
+  }
+
   const retailerName = String(formData.get('retailerName') ?? '').trim();
   const companyName = String(formData.get('companyName') ?? '').trim();
   const email = String(formData.get('email') ?? '').trim();
@@ -60,6 +74,7 @@ async function submitAction(_state: FormState, formData: FormData): Promise<Form
 
   try {
     await submitRequest(requestInput);
+    window.localStorage.setItem(LAST_SUBMITTED_KEY, String(Date.now()));
     // The request is already saved at this point — a notification failure
     // shouldn't stop the retailer from seeing a successful submission.
     sendRequestNotification(requestInput).catch((err) =>
@@ -97,7 +112,36 @@ export default function RequestPage() {
           <h1 className="text-3xl font-bold text-gray-900">Tool Loan Request</h1>
           <p className="mt-2 text-gray-500">Fill in the form below and we&apos;ll get back to you to confirm availability.</p>
         </div>
+
+        <div className="text-xs text-gray-500 bg-gray-100 rounded-xl p-4 mb-6 space-y-2">
+          <p className="font-semibold text-gray-600">Privacy Notice</p>
+          <p>
+            We collect the information you provide on this form to process and manage your tool loan request,
+            including approving requests, tracking the loan, and contacting you about it. It is processed by
+            Mercedes-Benz Passenger Car Technical Training on the basis of our legitimate business interest in
+            managing tool loans.
+          </p>
+          <p>
+            This information is stored using Google Firebase, and a request notification is sent via a third-party
+            email delivery service; both act as data processors on our behalf. We retain this information for as
+            long as necessary to manage the loan and for our legitimate business records.
+          </p>
+          <p>
+            You have the right to ask for access to, correction of, or deletion of your information. To exercise
+            these rights, contact{' '}
+            <a href="mailto:jason.richards@mercedes-benz.com" className="underline">
+              jason.richards@mercedes-benz.com
+            </a>
+            .
+          </p>
+        </div>
+
         <form action={formAction} className="bg-white rounded-2xl shadow p-8 space-y-6">
+          {/* Honeypot — hidden from real users, catches bots that fill every field */}
+          <div className="absolute -left-[9999px]" aria-hidden="true">
+            <label htmlFor="website">Website</label>
+            <input type="text" id="website" name="website" tabIndex={-1} autoComplete="off" />
+          </div>
           <div>
             <h2 className="text-lg font-semibold text-gray-700 mb-4 pb-2 border-b">Your Details</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

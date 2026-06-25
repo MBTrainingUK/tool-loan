@@ -6,6 +6,16 @@ service cloud.firestore {
       return request.auth != null && request.auth.uid == 'Y55jhqz1qbQkpMtmvBUPhTLcNWZ2';
     }
 
+    // Bounds every field length so a scripted submission can't bloat
+    // storage with oversized payloads.
+    function validString(value, maxLen) {
+      return value is string && value.size() > 0 && value.size() <= maxLen;
+    }
+
+    function validOptionalString(data, field, maxLen) {
+      return !(field in data) || (data[field] is string && data[field].size() <= maxLen);
+    }
+
     // Public retailers can submit a loan request, but cannot read existing
     // requests (which contain other retailers' contact details).
     match /requests/{requestId} {
@@ -16,17 +26,24 @@ service cloud.firestore {
         ])
         && request.resource.data.status == 'pending'
         && request.resource.data.acceptedTerms == true
-        && request.resource.data.retailerName is string
-        && request.resource.data.companyName is string
-        && request.resource.data.email is string
-        && request.resource.data.phone is string
-        && request.resource.data.toolDescription is string
-        && request.resource.data.vinNumber is string
-        && request.resource.data.vehicleModel is string
-        && request.resource.data.jobType is string
-        && request.resource.data.neededFrom is string
-        && request.resource.data.neededUntil is string
-        && request.resource.data.createdAt is string;
+        && validString(request.resource.data.retailerName, 200)
+        && validString(request.resource.data.companyName, 200)
+        && validString(request.resource.data.email, 320)
+        && validString(request.resource.data.phone, 50)
+        && validString(request.resource.data.toolDescription, 2000)
+        && validString(request.resource.data.vinNumber, 50)
+        && validString(request.resource.data.vehicleModel, 200)
+        && validString(request.resource.data.jobType, 200)
+        && validString(request.resource.data.neededFrom, 20)
+        && validString(request.resource.data.neededUntil, 20)
+        && validString(request.resource.data.createdAt, 40)
+        && validOptionalString(request.resource.data, 'department', 200)
+        && validOptionalString(request.resource.data, 'vehicleRegistration', 50)
+        && validOptionalString(request.resource.data, 'mileage', 50)
+        && validOptionalString(request.resource.data, 'jobNumber', 100)
+        && validOptionalString(request.resource.data, 'wisToolReference', 100)
+        && validOptionalString(request.resource.data, 'toolPartNumber', 100)
+        && validOptionalString(request.resource.data, 'notes', 2000);
       allow read, update, delete: if isAdmin();
     }
 
