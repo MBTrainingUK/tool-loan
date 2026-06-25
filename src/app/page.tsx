@@ -19,6 +19,7 @@ async function submitAction(_state: FormState, formData: FormData): Promise<Form
   const jobType = String(formData.get('jobType') ?? '').trim();
   const jobNumber = String(formData.get('jobNumber') ?? '').trim();
   const wisToolReference = String(formData.get('wisToolReference') ?? '').trim();
+  const toolPartNumber = String(formData.get('toolPartNumber') ?? '').trim();
   const toolDescription = String(formData.get('toolDescription') ?? '').trim();
   const neededFrom = String(formData.get('neededFrom') ?? '').trim();
   const neededUntil = String(formData.get('neededUntil') ?? '').trim();
@@ -49,6 +50,7 @@ async function submitAction(_state: FormState, formData: FormData): Promise<Form
     jobType,
     jobNumber: jobNumber || undefined,
     wisToolReference: wisToolReference || undefined,
+    toolPartNumber: toolPartNumber || undefined,
     toolDescription,
     neededFrom,
     neededUntil,
@@ -166,8 +168,12 @@ export default function RequestPage() {
             <h2 className="text-lg font-semibold text-gray-700 mb-4 pb-2 border-b">Tool Required</h2>
             <div className="space-y-4">
               <div>
-                <label className={labelClass}>Describe the tool you need *</label>
-                <textarea name="toolDescription" required rows={3} placeholder="e.g. Engine timing kit for BMW N20, or brake bleeding kit..." className={inputClass} />
+                <label className={labelClass}>Tool Part No. <span className="text-gray-400">(optional)</span></label>
+                <input type="text" name="toolPartNumber" className={inputClass} />
+              </div>
+              <div>
+                <label className={labelClass}>Tool Description *</label>
+                <textarea name="toolDescription" required rows={3} placeholder="e.g. Engine timing kit for the M270 engine, or brake bleeding kit..." className={inputClass} />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>

@@ -24,6 +24,7 @@ export interface Tool {
 export interface LoanRequest {
   id: string;
   // What the retailer described
+  toolPartNumber?: string;
   toolDescription: string;
   // Set by admin when approving
   toolId?: string;

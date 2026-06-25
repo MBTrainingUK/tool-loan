@@ -73,6 +73,7 @@ function RequestDetailContent() {
 
         <h2 className="font-semibold text-gray-900 text-sm pt-2 border-t">Tool Required</h2>
         <div className="grid grid-cols-2 gap-4 text-sm">
+          <Field label="Tool Part No." value={request.toolPartNumber} />
           <Field label="Needed From" value={request.neededFrom} />
           <Field label="Needed Until" value={request.neededUntil} />
         </div>

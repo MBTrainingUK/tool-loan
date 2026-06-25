@@ -24,6 +24,7 @@ export async function sendRequestNotification(
       job_type: input.jobType,
       job_number: input.jobNumber ?? '',
       wis_tool_reference: input.wisToolReference ?? '',
+      tool_part_number: input.toolPartNumber ?? '',
       tool_description: input.toolDescription,
       needed_from: input.neededFrom,
       needed_until: input.neededUntil,
