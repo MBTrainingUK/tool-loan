@@ -33,9 +33,21 @@ export interface LoanRequest {
   companyName: string;
   email: string;
   phone: string;
+  department?: string;
+  // Vehicle details
+  vehicleRegistration: string;
+  vinNumber?: string;
+  vehicleModel: string;
+  mileage?: string;
+  // Job details
+  jobType: string;
+  jobNumber?: string;
+  wisToolReference?: string;
   // Dates
   neededFrom: string; // ISO date
   neededUntil: string; // ISO date
+  // Terms
+  acceptedTerms: boolean;
   // Admin
   status: RequestStatus;
   notes?: string;

@@ -27,16 +27,9 @@ function byCreatedAtDesc(a: { createdAt: string }, b: { createdAt: string }) {
 
 // ----- Requests -----
 
-export async function submitRequest(input: {
-  retailerName: string;
-  companyName: string;
-  email: string;
-  phone: string;
-  toolDescription: string;
-  neededFrom: string;
-  neededUntil: string;
-  notes?: string;
-}) {
+export async function submitRequest(
+  input: Omit<LoanRequest, 'id' | 'status' | 'createdAt' | 'toolId' | 'toolName'>
+) {
   const request: Omit<LoanRequest, 'id'> = {
     ...input,
     status: 'pending',
