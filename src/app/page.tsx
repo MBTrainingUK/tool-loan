@@ -2,6 +2,7 @@
 
 import { useActionState } from 'react';
 import { submitRequest } from '@/lib/firestore';
+import { sendRequestNotification } from '@/lib/email';
 
 type FormState = { error?: string; success?: boolean } | undefined;
 
@@ -30,6 +31,18 @@ async function submitAction(_state: FormState, formData: FormData): Promise<Form
       neededUntil,
       notes: notes || undefined,
     });
+    // The request is already saved at this point — a notification failure
+    // shouldn't stop the retailer from seeing a successful submission.
+    sendRequestNotification({
+      retailerName,
+      companyName,
+      email,
+      phone,
+      toolDescription,
+      neededFrom,
+      neededUntil,
+      notes: notes || undefined,
+    }).catch((err) => console.error('Failed to send notification email:', err));
     return { success: true };
   } catch {
     return { error: 'Something went wrong. Please try again or call us directly.' };
