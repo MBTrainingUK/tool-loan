@@ -113,29 +113,6 @@ export default function RequestPage() {
           <p className="mt-2 text-gray-500">Fill in the form below and we&apos;ll get back to you to confirm availability.</p>
         </div>
 
-        <div className="text-xs text-gray-500 bg-gray-100 rounded-xl p-4 mb-6 space-y-2">
-          <p className="font-semibold text-gray-600">Privacy Notice</p>
-          <p>
-            We collect the information you provide on this form to process and manage your tool loan request,
-            including approving requests, tracking the loan, and contacting you about it. It is processed by
-            Mercedes-Benz Passenger Car Technical Training on the basis of our legitimate business interest in
-            managing tool loans.
-          </p>
-          <p>
-            This information is stored using Google Firebase, and a request notification is sent via a third-party
-            email delivery service; both act as data processors on our behalf. We retain this information for as
-            long as necessary to manage the loan and for our legitimate business records.
-          </p>
-          <p>
-            You have the right to ask for access to, correction of, or deletion of your information. To exercise
-            these rights, contact{' '}
-            <a href="mailto:jason.richards@mercedes-benz.com" className="underline">
-              jason.richards@mercedes-benz.com
-            </a>
-            .
-          </p>
-        </div>
-
         <form action={formAction} className="bg-white rounded-2xl shadow p-8 space-y-6">
           {/* Honeypot — hidden from real users, catches bots that fill every field */}
           <div className="absolute -left-[9999px]" aria-hidden="true">
@@ -261,6 +238,29 @@ export default function RequestPage() {
               <input type="checkbox" name="acceptedTerms" required className="mt-1" />
               <span>I have read and accept the terms and conditions above. *</span>
             </label>
+          </div>
+
+          <div className="text-xs text-gray-500 bg-gray-100 rounded-xl p-4 space-y-2">
+            <p className="font-semibold text-gray-600">Privacy Notice</p>
+            <p>
+              We collect the information you provide on this form to process and manage your tool loan request,
+              including approving requests, tracking the loan, and contacting you about it. It is processed by
+              Mercedes-Benz Passenger Car Technical Training on the basis of our legitimate business interest in
+              managing tool loans.
+            </p>
+            <p>
+              This information is stored using Google Firebase, and a request notification is sent via a third-party
+              email delivery service; both act as data processors on our behalf. We retain this information for as
+              long as necessary to manage the loan and for our legitimate business records.
+            </p>
+            <p>
+              You have the right to ask for access to, correction of, or deletion of your information. To exercise
+              these rights, contact{' '}
+              <a href="mailto:jason.richards@mercedes-benz.com" className="underline">
+                jason.richards@mercedes-benz.com
+              </a>
+              .
+            </p>
           </div>
 
           {state?.error && <p className="text-sm text-red-600 bg-red-50 rounded-lg px-4 py-2">{state.error}</p>}
