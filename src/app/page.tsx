@@ -28,7 +28,7 @@ async function submitAction(_state: FormState, formData: FormData): Promise<Form
 
   if (
     !retailerName || !companyName || !email || !phone ||
-    !vehicleRegistration || !vehicleModel || !jobType ||
+    !vinNumber || !vehicleModel || !jobType ||
     !toolDescription || !neededFrom || !neededUntil
   ) {
     return { error: 'Please fill in all required fields.' };
@@ -43,8 +43,8 @@ async function submitAction(_state: FormState, formData: FormData): Promise<Form
     email,
     phone,
     department: department || undefined,
-    vehicleRegistration,
-    vinNumber: vinNumber || undefined,
+    vehicleRegistration: vehicleRegistration || undefined,
+    vinNumber,
     vehicleModel,
     mileage: mileage || undefined,
     jobType,
@@ -128,16 +128,16 @@ export default function RequestPage() {
             <h2 className="text-lg font-semibold text-gray-700 mb-4 pb-2 border-b">Vehicle Details</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className={labelClass}>Vehicle Registration *</label>
-                <input type="text" name="vehicleRegistration" required className={inputClass} />
+                <label className={labelClass}>Vehicle Registration <span className="text-gray-400">(optional)</span></label>
+                <input type="text" name="vehicleRegistration" className={inputClass} />
               </div>
               <div>
                 <label className={labelClass}>Vehicle Model *</label>
                 <input type="text" name="vehicleModel" required className={inputClass} />
               </div>
               <div>
-                <label className={labelClass}>VIN Number <span className="text-gray-400">(optional)</span></label>
-                <input type="text" name="vinNumber" className={inputClass} />
+                <label className={labelClass}>VIN Number *</label>
+                <input type="text" name="vinNumber" required className={inputClass} />
               </div>
               <div>
                 <label className={labelClass}>Mileage <span className="text-gray-400">(optional)</span></label>

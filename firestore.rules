@@ -11,7 +11,7 @@ service cloud.firestore {
     match /requests/{requestId} {
       allow create: if request.resource.data.keys().hasAll([
           'retailerName', 'companyName', 'email', 'phone', 'toolDescription',
-          'vehicleRegistration', 'vehicleModel', 'jobType', 'acceptedTerms',
+          'vinNumber', 'vehicleModel', 'jobType', 'acceptedTerms',
           'neededFrom', 'neededUntil', 'status', 'createdAt'
         ])
         && request.resource.data.status == 'pending'
@@ -21,7 +21,7 @@ service cloud.firestore {
         && request.resource.data.email is string
         && request.resource.data.phone is string
         && request.resource.data.toolDescription is string
-        && request.resource.data.vehicleRegistration is string
+        && request.resource.data.vinNumber is string
         && request.resource.data.vehicleModel is string
         && request.resource.data.jobType is string
         && request.resource.data.neededFrom is string
