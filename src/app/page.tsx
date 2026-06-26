@@ -42,7 +42,7 @@ async function submitAction(_state: FormState, formData: FormData): Promise<Form
   if (
     !retailerName || !companyName || !email || !phone ||
     !vinNumber || !vehicleModel || !jobType ||
-    !toolDescription || !neededFrom || !neededUntil
+    !toolPartNumber || !toolDescription || !neededFrom || !neededUntil
   ) {
     return { error: 'Please fill in all required fields.' };
   }
@@ -62,7 +62,7 @@ async function submitAction(_state: FormState, formData: FormData): Promise<Form
     jobType,
     jobNumber: jobNumber || undefined,
     wisToolReference: wisToolReference || undefined,
-    toolPartNumber: toolPartNumber || undefined,
+    toolPartNumber,
     toolDescription,
     neededFrom,
     neededUntil,
@@ -183,8 +183,8 @@ export default function RequestPage() {
             <h2 className="text-lg font-semibold text-gray-700 mb-4 pb-2 border-b">Tool Required</h2>
             <div className="space-y-4">
               <div>
-                <label className={labelClass}>Tool Part No. <span className="text-gray-400">(optional)</span></label>
-                <input type="text" name="toolPartNumber" className={inputClass} />
+                <label className={labelClass}>Tool Part No. *</label>
+                <input type="text" name="toolPartNumber" required className={inputClass} />
               </div>
               <div>
                 <label className={labelClass}>Tool Description *</label>
