@@ -26,7 +26,6 @@ async function submitAction(_state: FormState, formData: FormData): Promise<Form
   const email = String(formData.get('email') ?? '').trim();
   const phone = String(formData.get('phone') ?? '').trim();
   const department = String(formData.get('department') ?? '').trim();
-  const vehicleRegistration = String(formData.get('vehicleRegistration') ?? '').trim();
   const vinNumber = String(formData.get('vinNumber') ?? '').trim();
   const vehicleModel = String(formData.get('vehicleModel') ?? '').trim();
   const mileage = String(formData.get('mileage') ?? '').trim();
@@ -57,7 +56,6 @@ async function submitAction(_state: FormState, formData: FormData): Promise<Form
     email,
     phone,
     department: department || undefined,
-    vehicleRegistration: vehicleRegistration || undefined,
     vinNumber,
     vehicleModel,
     mileage: mileage || undefined,
@@ -148,10 +146,6 @@ export default function RequestPage() {
           <div>
             <h2 className="text-lg font-semibold text-gray-700 mb-4 pb-2 border-b">Vehicle Details</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className={labelClass}>Vehicle Registration <span className="text-gray-400">(optional)</span></label>
-                <input type="text" name="vehicleRegistration" className={inputClass} />
-              </div>
               <div>
                 <label className={labelClass}>Vehicle Model *</label>
                 <input type="text" name="vehicleModel" required className={inputClass} />

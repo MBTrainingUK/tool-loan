@@ -60,7 +60,6 @@ function RequestDetailContent() {
         <div className="grid grid-cols-2 gap-4 text-sm">
           <Field label="VIN Number" value={request.vinNumber} />
           <Field label="Model" value={request.vehicleModel} />
-          <Field label="Registration" value={request.vehicleRegistration} />
           <Field label="Mileage" value={request.mileage} />
         </div>
 

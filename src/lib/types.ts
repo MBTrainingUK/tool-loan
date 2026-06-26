@@ -36,7 +36,6 @@ export interface LoanRequest {
   phone: string;
   department?: string;
   // Vehicle details
-  vehicleRegistration?: string;
   vinNumber: string;
   vehicleModel: string;
   mileage?: string;

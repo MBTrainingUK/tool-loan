@@ -17,7 +17,6 @@ export async function sendRequestNotification(
       email: input.email,
       phone: input.phone,
       department: input.department ?? '',
-      vehicle_registration: input.vehicleRegistration,
       vin_number: input.vinNumber ?? '',
       vehicle_model: input.vehicleModel,
       mileage: input.mileage ?? '',
