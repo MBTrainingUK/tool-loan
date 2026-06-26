@@ -59,15 +59,6 @@ function RequestDetailContent() {
         <h2 className="font-semibold text-gray-900 text-sm pt-2 border-t">Vehicle Details</h2>
         <div className="grid grid-cols-2 gap-4 text-sm">
           <Field label="VIN Number" value={request.vinNumber} />
-          <Field label="Model" value={request.vehicleModel} />
-          <Field label="Mileage" value={request.mileage} />
-        </div>
-
-        <h2 className="font-semibold text-gray-900 text-sm pt-2 border-t">Job Details</h2>
-        <div className="grid grid-cols-2 gap-4 text-sm">
-          <Field label="Type of Job/Repair" value={request.jobType} />
-          <Field label="Work Order / Job Number" value={request.jobNumber} />
-          <Field label="WIS Tool Reference" value={request.wisToolReference} />
         </div>
 
         <h2 className="font-semibold text-gray-900 text-sm pt-2 border-t">Tool Required</h2>

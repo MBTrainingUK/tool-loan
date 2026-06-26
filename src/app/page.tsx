@@ -27,11 +27,6 @@ async function submitAction(_state: FormState, formData: FormData): Promise<Form
   const phone = String(formData.get('phone') ?? '').trim();
   const department = String(formData.get('department') ?? '').trim();
   const vinNumber = String(formData.get('vinNumber') ?? '').trim();
-  const vehicleModel = String(formData.get('vehicleModel') ?? '').trim();
-  const mileage = String(formData.get('mileage') ?? '').trim();
-  const jobType = String(formData.get('jobType') ?? '').trim();
-  const jobNumber = String(formData.get('jobNumber') ?? '').trim();
-  const wisToolReference = String(formData.get('wisToolReference') ?? '').trim();
   const toolPartNumber = String(formData.get('toolPartNumber') ?? '').trim();
   const toolDescription = String(formData.get('toolDescription') ?? '').trim();
   const neededFrom = String(formData.get('neededFrom') ?? '').trim();
@@ -41,7 +36,7 @@ async function submitAction(_state: FormState, formData: FormData): Promise<Form
 
   if (
     !retailerName || !companyName || !email || !phone ||
-    !vinNumber || !vehicleModel || !jobType ||
+    !vinNumber ||
     !toolPartNumber || !toolDescription || !neededFrom || !neededUntil
   ) {
     return { error: 'Please fill in all required fields.' };
@@ -57,11 +52,6 @@ async function submitAction(_state: FormState, formData: FormData): Promise<Form
     phone,
     department: department || undefined,
     vinNumber,
-    vehicleModel,
-    mileage: mileage || undefined,
-    jobType,
-    jobNumber: jobNumber || undefined,
-    wisToolReference: wisToolReference || undefined,
     toolPartNumber,
     toolDescription,
     neededFrom,
@@ -107,7 +97,7 @@ export default function RequestPage() {
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Tool Loan Request</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Emergency Tool Loan Request</h1>
           <p className="mt-2 text-gray-500">Fill in the form below and we&apos;ll get back to you to confirm availability.</p>
         </div>
 
@@ -147,34 +137,8 @@ export default function RequestPage() {
             <h2 className="text-lg font-semibold text-gray-700 mb-4 pb-2 border-b">Vehicle Details</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className={labelClass}>Vehicle Model *</label>
-                <input type="text" name="vehicleModel" required className={inputClass} />
-              </div>
-              <div>
                 <label className={labelClass}>VIN Number *</label>
                 <input type="text" name="vinNumber" required className={inputClass} />
-              </div>
-              <div>
-                <label className={labelClass}>Mileage <span className="text-gray-400">(optional)</span></label>
-                <input type="text" name="mileage" className={inputClass} />
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <h2 className="text-lg font-semibold text-gray-700 mb-4 pb-2 border-b">Job Details</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className={labelClass}>Type of Job/Repair *</label>
-                <input type="text" name="jobType" required className={inputClass} />
-              </div>
-              <div>
-                <label className={labelClass}>Work Order / Job Number <span className="text-gray-400">(optional)</span></label>
-                <input type="text" name="jobNumber" className={inputClass} />
-              </div>
-              <div>
-                <label className={labelClass}>WIS Tool Reference <span className="text-gray-400">(optional)</span></label>
-                <input type="text" name="wisToolReference" className={inputClass} />
               </div>
             </div>
           </div>

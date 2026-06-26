@@ -37,12 +37,6 @@ export interface LoanRequest {
   department?: string;
   // Vehicle details
   vinNumber: string;
-  vehicleModel: string;
-  mileage?: string;
-  // Job details
-  jobType: string;
-  jobNumber?: string;
-  wisToolReference?: string;
   // Dates
   neededFrom: string; // ISO date
   neededUntil: string; // ISO date
